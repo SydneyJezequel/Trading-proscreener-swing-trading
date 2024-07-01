@@ -1,0 +1,53 @@
+// # Pattern 3 MM - V4
+MM5 = average[5](close)
+MME13 = ExponentialAverage[13](close)
+MM20 = average[20](close)
+
+// Variables
+Cond1 = 0
+Cond2 = 0
+Cond3 = 0
+Cond4 = 0
+Cond5 = 0
+Cond6 = 0
+crois = 0
+Volmini = 10000
+PrixMini = 0.5
+
+// Conditions de croisement
+IF MM5[5] CROSSES OVER MME13[5] OR MM5[5] CROSSES OVER MM20[5] OR MME13[5] CROSSES OVER MM20[5]THEN
+crois = 5
+ENDIF
+
+IF MM5[4] CROSSES OVER MME13[4] OR MM5[4] CROSSES OVER MM20[4] OR MME13[4] CROSSES OVER MM20[4] THEN
+crois = 4
+ENDIF
+
+IF MM5[3] CROSSES OVER MME13[3] OR MM5[3] CROSSES OVER MM20[3] OR MME13[3] CROSSES OVER MM20[3] THEN
+crois = 3
+ENDIF
+
+IF crois > 0 THEN
+Cond1 = 1
+ENDIF
+
+// Conditions d'alignement
+IF (MM5[3] > MME13[3] AND MME13[3] > MM20[3]) OR (MM5[2] > MME13[2 ] AND MME13[2] > MM20[2]) OR (MM5[1] > MME13[1] AND MME13[1] > MM20[1]) THEN
+Cond2 = 1
+ENDIF
+
+// Condition : le prix est au-dessus de la MM 5 depuis 2 jours
+IF CLOSE[2] > MM5[2] AND CLOSE[1] > MM5[1] AND CLOSE > MM5 THEN
+Cond3 = 1
+ENDIF
+
+// Condition : Si prix d'une action est trop bas, il y aura trop de volatilité sur cette action ou l'écart sera trop faible entre l'open et le close d'une bougie
+Cond4 = CLOSE > PrixMini
+
+// Condition de volume suffisant à partir de J-3
+Cond5 = Volume[3] > Volmini AND Volume[2] > Volmini AND Volume[1] > Volmini AND Volume[0] > Volmini
+
+// Condition : La MM5 reste haussière les 3 derniers jours
+Cond6 = MM5 > MM5[1] AND MM5[1] > MM5[2]
+
+SCREENER[Cond1 AND Cond2 AND Cond3 AND Cond4 AND Cond5 AND Cond6] SORT BY crois AS "jour de Croisement"
