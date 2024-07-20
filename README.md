@@ -6,4 +6,4 @@ Il détecte les actifs qui répondent aux conditions suivantes :
 * Le prix évolue au-dessus des moyennes mobiles depuis au moins 2 jours.
 * Les volumes traités sont supérieurs à 10 000 depuis au moins 3 jours.
 
-Le langage utilisé est « ProBuilder », un langage propre à la plateforme de Trading Prorealtime.
+Le langage utilisé est ProRealcode, un langage propre à la plateforme de Trading Prorealtime.
